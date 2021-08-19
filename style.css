@@ -1,0 +1,9 @@
+body {
+    margin: 0;
+}
+
+#PPT {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
