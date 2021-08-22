@@ -7,12 +7,16 @@
 </head>
 <body>
 <script src="src/module.js" type="module"></script>
-<canvas id="p" style="position: fixed; height:95%; width:100%;"></canvas>
+<div style="position: fixed; height:95%; width:100%;"></div>
+<canvas id="p"></canvas>
 <footer id="c" style="position: fixed; height:5%; width:100%; top: 95%;">
     <img id="l" src="src/leftarr.svg">
     <img id="r" src="src/rightarr.svg">
     <img id="d" src="src/draw.svg">
-</footer>
+    <label for="penColor">Pen Color:</label>
+    <input type="color" id="penColor" value="#000000">
+    <label for="lineWidth">Pen Width:</label>
+    <input type="range" min="1" max="10" value="2" id="lineWidth"></footer>
 <script src="src/ppt.js" type="module"></script>
 </body>
 </html>
