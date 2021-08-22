@@ -5,74 +5,61 @@ let drawing = false;
 function nextSlide () {
     console.log('next');
 }
+
 function prevSlide () {
     console.log('prev');
 }
 
-$('#p').bind('click', nextSlide);
+function draw () {
+    drawing = !drawing;
+}
+
+$('#d').bind('click', draw)
 
 $('#r').bind('click', nextSlide);
 
 $('#l').bind('click', prevSlide);
 
-class Canvas {
-    constructor(canvas_id, draw, coord) {
-        this.canvas_id = canvas_id;
-        this.draw = draw;
-        this.coord = coord
-    }
-    startDrawing(event) {
-        this.draw = true;
-        let canvas = document.getElementById(this.canvas_id);
-        this.coord.x = (event.clientX - canvas.getBoundingClientRect().left);
-        this.coord.y = (event.clientY - canvas.getBoundingClientRect().top);
-    }
+(function() {
+    var canvas = document.querySelector('#p');
+    var ctx = canvas.getContext('2d');
+    const sketch_style = getComputedStyle(canvas);
+    canvas.width = parseInt(sketch_style.getPropertyValue('width'));
+    canvas.height = parseInt(sketch_style.getPropertyValue('height'));
 
-    drawSketch(event) {
-        if (!this.draw) {
-            return 0;
-        }
-        let canvas = document.getElementById(this.canvas_id);
-        let ctx = canvas.getContext('2d');
-        // Start the line
+    var mouse = {x: 0, y: 0};
+    var last_mouse = {x: 0, y: 0};
+    
+    /* Mouse Capturing Work */
+    canvas.addEventListener('mousemove', function(e) {
+        last_mouse.x = mouse.x;
+        last_mouse.y = mouse.y;
+        
+        mouse.x = e.pageX - this.offsetLeft;
+        mouse.y = e.pageY - this.offsetTop;
+    }, false);
+    
+    
+    /* Drawing on Paint App */
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    
+    canvas.addEventListener('mousedown', function(e) {
+        canvas.addEventListener('mousemove', onPaint, false);
+    }, false);
+    
+    canvas.addEventListener('mouseup', function() {
+        canvas.removeEventListener('mousemove', onPaint, false);
+    }, false);
+    
+    var onPaint = function() {
         ctx.beginPath();
-
-        // Pull from the color and width from the associated
-        // controls. The line cap is hardcoded to be rounded,
-        // because it looks more natural for a drawing application
-        ctx.strokeStyle = document.getElementById("penColor").value;
-        ctx.lineWidth = document.getElementById("lineWidth").value;
-        ctx.lineCap = "rounded";
-        // Start moving to the coordinates determined by mouse
-        // movement. The position is updated as the cursor moves
-        ctx.moveTo(this.coord.x, this.coord.y);
-        this.coord.x = (event.clientX - canvas.getBoundingClientRect().left);
-        this.coord.y = (event.clientY - canvas.getBoundingClientRect().top);
-
-        // Specify where the line ends
-        ctx.lineTo(this.coord.x , this.coord.y);
-
-        // Draw the line
+        ctx.moveTo(last_mouse.x, last_mouse.y);
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.closePath();
         ctx.stroke();
-    }
-    stopDrawing(event) {
-        this.draw = false;
-    }
-}
-
-
-function main() {
-    let canvas = new Canvas("p", false, {x:0 , y:0});
-    document.addEventListener('mousedown', function(e){
-        canvas.startDrawing(e);
-        });
-    document.addEventListener('mouseup', function(e){
-        canvas.stopDrawing(e);
-        });
-    document.addEventListener('mousemove', function(e){
-        canvas.drawSketch(e);
-        });
-}
-window.addEventListener("DOMContentLoaded", ()=>{
-    main();
-});
+        ctx.strokeStyle = $('#penColor').val();
+        ctx.lineWidth = $('#lineWidth').val();
+    };
+    
+}());

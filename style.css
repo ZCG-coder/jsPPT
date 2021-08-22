@@ -4,8 +4,9 @@ body {
 
 #p {
     position: fixed;
-    height: 100%;
+    height: 95%;
     width: 100%;
+    border-bottom: 1px solid black;
 }
 
 
