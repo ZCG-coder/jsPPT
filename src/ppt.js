@@ -9,7 +9,7 @@ function prevSlide () {
     console.log('prev');
 }
 
-//$('#p').bind('click', nextSlide);
+$('#p').bind('click', nextSlide);
 
 $('#r').bind('click', nextSlide);
 
@@ -60,12 +60,9 @@ class Canvas {
     }
 }
 
-// Write the main function that will execute on load
+
 function main() {
-    // Initialize the main object, canvas
-    let canvas = new Canvas("p", false, {x:0 , y:0});
-    // Add event listeners for the mousedown, mouseup, and 
-    // mousemove. 
+    let canvas = new Canvas("p", false, {x:0 , y:0}); 
     document.addEventListener('mousedown', function(e){
         canvas.startDrawing(e);
         });
