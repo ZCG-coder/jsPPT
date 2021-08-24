@@ -1,6 +1,7 @@
 import $ from './module.js';
 
 let drawing = false;
+let erasing = false;
 
 function nextSlide() {
     console.log('next');
@@ -67,14 +68,32 @@ function draw() {
     );
 
     function onPaint() {
+        erasing = $('#eraser').is(":checked");
+        if (!erasing) {
+            ctx.globalCompositeOperation="source-over";
+            ctx.lineWidth = $('#lineWidth').val();
+        } else {
+            ctx.globalCompositeOperation="destination-out";
+            ctx.lineWidth = $('#lineWidth').val() * 10;
+        }
+        
         ctx.beginPath();
         ctx.moveTo(last_mouse.x, last_mouse.y);
         ctx.lineTo(mouse.x, mouse.y);
         ctx.closePath();
         ctx.stroke();
-        ctx.xstrokeStyle = $('#penColor').val();
-        ctx.lineWidth = $('#lineWidth').val();
     }
 }
 
 draw();
+
+var modal = document.getElementById("settingsModal");
+var btn = document.getElementById("settings");
+btn.onclick = function() {
+  modal.style.display = "block";
+}
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}

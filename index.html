@@ -13,11 +13,20 @@
             <img id="l" src="src/leftarr.svg" />
             <img id="r" src="src/rightarr.svg" />
             <img id="d" src="src/draw.svg" />
+            <img id="settings" src="src/settings.svg" />
+        </footer>
+        <div id="settingsModal" class="modal">
+
+          <div class="modal-content">
             <label for="penColor">Pen Color:</label>
             <input type="color" id="penColor" value="#000000" />
             <label for="lineWidth">Pen Width:</label>
             <input type="range" min="1" max="10" value="2" id="lineWidth" />
-        </footer>
+            <label for="eraser">Eraser</label>
+            <input type="checkbox" id="eraser">
+          </div>
+
+        </div>
 
         <script src="src/ppt.js" type="module"></script>
     </body>
