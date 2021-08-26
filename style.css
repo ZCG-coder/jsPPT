@@ -11,8 +11,9 @@ body {
 }
 
 
-input {
+input, #wdis {
     display: inline-block;
+    margin: 0;
 }
 
 .modal {

@@ -3,6 +3,7 @@ import $ from './module.js';
 let drawing = false;
 let erasing = false;
 
+
 function nextSlide() {
     console.log('next');
 }
@@ -13,13 +14,55 @@ function prevSlide() {
 
 function toggleDraw() {
     drawing = !drawing;
+    if (drawing) {
+        $('#p').css({
+            cursor: 'crosshair'
+        });
+    }
+    else {
+        $('#p').css({
+            cursor: 'default'
+        });
+    }
 }
 
-$('#d').bind('click', toggleDraw);
+function updatePen(ctx) {
+    erasing = $('#eraser').is(":checked");
+    if (!erasing) {
+        ctx.globalCompositeOperation="source-over";
+        ctx.lineWidth = $('#lineWidth').val();
+        ctx.strokeStyle = $('#penColor').val();
+    } else {
+        ctx.globalCompositeOperation="destination-out";
+        ctx.lineWidth = $('#lineWidth').val() * 10;
+    }
+}
 
-$('#r').bind('click', nextSlide);
+function updatePage(_) {
+    erasing = $('#eraser').is(":checked");
+    if (!erasing) {
+        $(this).trigger("change");
+        $('#width').text('Eraser width:');
+        $('#color').css({
+            display: 'none'
+        });
+    } else {
+        $(this).trigger("change");
+        $('#width').text('Pen width:');
+        $('#color').css({
+            display: 'inline-block'
+        });
+    }
+}
 
-$('#l').bind('click', prevSlide);
+function updateWidth(_) {
+    $('#wdis').text($('#lineWidth').val());
+}
+$('#d').mouseup(toggleDraw);
+$('#r').mouseup(nextSlide);
+$('#l').mouseup(prevSlide);
+$('#eraser').mouseup(updatePage);
+$('#lineWidth').mousemove(updateWidth);
 
 function draw() {
     var canvas = document.querySelector('#p');
@@ -68,15 +111,7 @@ function draw() {
     );
 
     function onPaint() {
-        erasing = $('#eraser').is(":checked");
-        if (!erasing) {
-            ctx.globalCompositeOperation="source-over";
-            ctx.lineWidth = $('#lineWidth').val();
-        } else {
-            ctx.globalCompositeOperation="destination-out";
-            ctx.lineWidth = $('#lineWidth').val() * 10;
-        }
-        
+        updatePen(ctx);
         ctx.beginPath();
         ctx.moveTo(last_mouse.x, last_mouse.y);
         ctx.lineTo(mouse.x, mouse.y);
