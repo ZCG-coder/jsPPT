@@ -1,16 +1,8 @@
 import $ from './module.js';
+import nextSlide from './ppt.js';
 
 let drawing = false;
 let erasing = false;
-
-
-function nextSlide() {
-    console.log('next');
-}
-
-function prevSlide() {
-    console.log('prev');
-}
 
 function toggleDraw() {
     drawing = !drawing;
@@ -59,8 +51,6 @@ function updateWidth(_) {
     $('#wdis').text($('#lineWidth').val());
 }
 $('#d').mouseup(toggleDraw);
-$('#r').mouseup(nextSlide);
-$('#l').mouseup(prevSlide);
 $('#eraser').mouseup(updatePage);
 $('#lineWidth').mousemove(updateWidth);
 
