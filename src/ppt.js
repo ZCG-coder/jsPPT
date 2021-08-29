@@ -1,23 +1,26 @@
 import $ from './module.js';
 
 const p = $('#text');
+var data;
+var slideNo = 0;
 
-function setSlide(data) {
-    var data = data;
+function setSlide(d) {
+    data = d.split('\n');
 }
 
 fetch('file.jspf')
-    .then(response => response.text())
+    .then((response) => response.text())
     .then((d) => {
-        setSlide(JSON.parse(d));
-});
+        setSlide(d);
+    });
 
 export default function nextSlide() {
-    eval(data[0][0]);
+    eval(data[slideNo]);
+    slideNo++;
 }
 
 function prevSlide() {
-    console.log('prev');
+    slideNo--;
 }
 
 function add(text, type) {
@@ -27,7 +30,6 @@ function add(text, type) {
         p.append(`<h1>${text}</h1>`);
     }
 }
-
 
 $('#r').mouseup(nextSlide);
 $('#l').mouseup(prevSlide);

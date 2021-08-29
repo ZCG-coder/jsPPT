@@ -1,9 +1,4 @@
-[
-    [
-        "add('a', 'h');",
-        "add('b', 'par');"
-    ],
-    [
-        "add('a', 'h');"
-    ]
-]
+add('a', 'par');
+add('b', 'par');
+p.empty();
+add('a', 'par')
