@@ -112,8 +112,8 @@ function draw() {
 
 draw();
 
-var modal = document.getElementById("settingsModal");
-var btn = document.getElementById("settings");
+const modal = document.getElementById("settingsModal");
+const btn = document.getElementById("settings");
 btn.onclick = function() {
   modal.style.display = "block";
 }

@@ -1,35 +1,29 @@
 import $ from './module.js';
 
 const p = $('#text');
-var data;
+var data = [];
 var slideNo = 0;
 
 function setSlide(d) {
     data = d.split('\n');
 }
 
-fetch('file.jspf')
-    .then((response) => response.text())
-    .then((d) => {
-        setSlide(d);
-    });
-
 export default function nextSlide() {
     eval(data[slideNo]);
-    slideNo++;
-}
-
-function prevSlide() {
-    slideNo--;
-}
-
-function add(text, type) {
-    if (type === 'par') {
-        p.append(`<p>${text}</p>`);
-    } else if (type === 'h') {
-        p.append(`<h1>${text}</h1>`);
+    if (slideNo < data.length) {
+        slideNo++;
     }
 }
 
-$('#r').mouseup(nextSlide);
-$('#l').mouseup(prevSlide);
+function add(elem) {
+    p.append(elem);
+}
+
+$(window).ready(function() {
+    fetch('file.jspf')
+        .then((response) => response.text())
+        .then((d) => {
+            setSlide(d);
+            nextSlide();
+        });
+});

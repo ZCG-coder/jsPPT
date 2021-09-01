@@ -1,4 +1,2 @@
-add('a', 'par');
-add('b', 'par');
-p.empty();
-add('a', 'par')
+add('<p>hi</p>');
+add('<p>hi</p>');
