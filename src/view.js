@@ -50,10 +50,6 @@ function updatePage(_) {
 function updateWidth(_) {
     $('#wdis').text($('#lineWidth').val());
 }
-$('#d').mouseup(toggleDraw);
-$('#eraser').mouseup(updatePage);
-$('#lineWidth').mousemove(updateWidth);
-
 function draw() {
     var canvas = document.querySelector('#p');
     var ctx = canvas.getContext('2d');
@@ -110,15 +106,23 @@ function draw() {
     }
 }
 
-draw();
-
-const modal = document.getElementById("settingsModal");
-const btn = document.getElementById("settings");
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-window.onclick = function(event) {
-  if (event.target === modal) {
-    modal.style.display = "none";
-  }
-}
+$(window).ready(
+    function() {
+        draw();
+        
+        const modal = $("#settingsModal");
+        const btn = $("#settings");
+        $('#d').mouseup(toggleDraw);
+        $('#eraser').mouseup(updatePage);
+        $('#lineWidth').mousemove(updateWidth);
+        
+        $(btn).mousedown(function() {
+            modal.css({display: "block"});
+        });
+        $(modal).mousedown(function(event) {
+            if (event.target == modal[0]) {
+                modal.css({display: "none"});
+            }
+        });
+    }
+);
