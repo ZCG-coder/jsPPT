@@ -1,26 +1,35 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <link rel="stylesheet" type="text/css" href="style.css" />
-        <title>JSPPT web view</title>
-    </head>
-    <body>
-        <script src="src/module.js" type="module"></script>
-        <div id="text" style="position: fixed; height: 95%; width: 100%;"></div>
-        <canvas id="p"></canvas>
-        <footer id="c" style="position: fixed; height: 5%; width: 100%; top: 95%;">
-            <img id="d" src="img/draw.svg" />
+
+<head>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="style.css" />
+	<title>JSPPT web view</title>
+</head>
+
+<body>
+	<script src="src/module.js" type="module"></script>
+	<div id="text" style="position: fixed; height: 95%; width: 100%;"></div>
+	<canvas id="p"></canvas>
+	<footer id="c" style="position: fixed; height: 5%; width: 100%; top: 95%;">
+		<img id="d" src="img/draw.svg" />
             <img id="settings" src="img/settings.svg" />
         </footer>
+
         <div id="settingsModal" class="modal">
-          <div class="modal-content">
-            <label id="color" for="penColor">Pen Color:<input type="color" id="penColor" value="#000000" /> </label>
-            <label id="width" for="lineWidth">Pen Width:</label>
-            <p id="wdis">2</p>
-            <input type="range" min="1" max="10" value="2" id="lineWidth" />
-            <label for="eraser">Eraser <input type="checkbox" id="eraser"> </label>
-          </div>
+            <div class="modal-content">
+                <label id="color" for="penColor">Pen Color:<input type="color" id="penColor" value="#000000" /> </label>
+                <label id="width" for="lineWidth">Pen Width:</label>
+                <p id="wdis">2</p>
+                <input type="range" min="1" max="10" value="2" id="lineWidth" />
+                <label for="eraser">Eraser <input type="checkbox" id="eraser"> </label>
+            </div>
+        </div>
+
+        <div id="selectFile" class="modal">
+            <div class="modal-content">
+                <p><a id='useClip'>Use clipboard content</a>, or <a href='javascript:void(0);' id='useDef'>use default</a></p>
+            </div>
         </div>
 
         <script src="src/view.js" type="module"></script>
